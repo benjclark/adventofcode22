@@ -7,7 +7,7 @@ stringArray.forEach(item => {
     if (item === "") {
         nestedNumsArrays.push([]);
     } else {
-        const parsedItem = Number.parseInt(item, 10)
+        const parsedItem = Number.parseInt(item, 10);
         nestedNumsArrays[nestedNumsArrays.length - 1].push(parsedItem);
     }
 });

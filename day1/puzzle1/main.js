@@ -1,22 +1,32 @@
 import {readFileSync} from 'fs';
 
-const stringArray = readFileSync('input.txt').toString().split("\n");
+const caloriesData = readFileSync('input.txt').toString().split("\n");
+let calorieGroups, groupsTotalCalories, answer;
 
-const nestedNumsArrays = [[]];
-stringArray.forEach(item => {
-    if (item === "") {
-        nestedNumsArrays.push([]);
-    } else {
-        const parsedItem = Number.parseInt(item, 10);
-        nestedNumsArrays[nestedNumsArrays.length - 1].push(parsedItem);
-    }
-});
+function createGroupsFromData() {
+    let groups = [[]];
+    caloriesData.forEach(line => {
+        if (line === "") {
+            groups.push([]);
+        } else {
+            groups[groups.length - 1].push(Number.parseInt(line, 10));
+        }
+    });
+    return groups;
+}
 
-const results = [];
-nestedNumsArrays.forEach(array => {
-    results.push(array.reduce((accumulator, current) => {
-        return accumulator + current;
-    }, 0));
-});
+function calcTotalCaloriesForGroups() {
+    let total = [];
+    calorieGroups.forEach(group => {
+        total.push(group.reduce((accumulator, current) =>
+                accumulator + current
+            , 0));
+    });
+    return total;
+}
 
-console.log(Math.max(...results));
+calorieGroups = createGroupsFromData();
+groupsTotalCalories = calcTotalCaloriesForGroups(calorieGroups);
+answer = Math.max(...groupsTotalCalories);
+
+console.log(answer);
